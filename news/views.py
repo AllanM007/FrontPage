@@ -6,20 +6,20 @@ from news.models import Headline
 def scrape(request):
   session = requests.Session()
   session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
-  url = "http://web.mta.info/developers/turnstile.html"
+  url = "https://www.theonion.com/"
   #content = session.get(url).text
   page = requests.get(url)
   #print(page.text[:500])
 
   html = page.text
   soup = BSoup(html, "html.parser")
-  News = soup.findAll('a')
+  News = soup.find_all('article', {"class":"sc-1pw4fyi-7 ffiXfS js_post_item"}) 
 
   for artcile in News:
-    main = artcile.findAll('a')[:0]
+    main = artcile.find_all('a')[0]
     link = main['href']
     image_src = str(main.find('img')['srcset']).split(" ")[-4]
-    title = main['title']
+    title = main['h4']
     new_headline = Headline()
     new_headline.title = title
     new_headline.url = link
