@@ -6,4 +6,4 @@ class Headline(models.Model):
   url = models.TextField(null=True)
   
   def __str__(self):
-    return self.image
+    return self.title

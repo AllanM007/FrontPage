@@ -12,7 +12,6 @@ def scrape(request):
 
   html = page.text
   soup = BSoup(html, "html.parser")
-  #print(soup.prettify())
   News = soup.findAll('article')
   
   for artcile in News:
