@@ -13,13 +13,12 @@ def scrape(request):
   html = page.text
   soup = BSoup(html, "html.parser")
   #print(soup.prettify())
-  News = soup.find_all('article') 
-
+  News = soup.findAll('article')
+  
   for artcile in News:
-    main = artcile.find_all('a')[0]
-    link = main.get('href')
-    image_src = str(main.find('img')['srcset']).split(" ")[-4]
-    title = main.get('h4')
+    link = str(artcile.find('a')['href']).split(" ")
+    image_src = str(artcile.find('img')['srcset']).split(" ")[-4]
+    title = str(artcile.find('h4').get_text())
     new_headline = Headline()
     new_headline.title = title
     new_headline.url = link
