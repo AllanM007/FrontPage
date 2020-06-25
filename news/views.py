@@ -7,11 +7,13 @@ def scrape(request):
   session = requests.Session()
   session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
   url = "https://www.theonion.com"
+  #content = session.get(url).text
   page = requests.get(url)
-  
-  content = session.get(url, verify=False).content
-  soup = BSoup(page.content, "html.parser")
-  News = soup.find_all('div', {"class":"curation-module__item"})
+  #print(page.text[:500])
+
+  html = page.text
+  soup = BSoup(html, "html.parser")
+  News = soup.find_all('div')
   
   for artcile in News:
     main = artcile.find_all('a')[0]
