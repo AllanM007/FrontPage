@@ -6,17 +6,17 @@ from news.models import Headline
 def scrape(request):
   session = requests.Session()
   session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
-  url = "https://www.theonion.com"
+  url = "http://web.mta.info/developers/turnstile.html"
   #content = session.get(url).text
   page = requests.get(url)
   #print(page.text[:500])
 
   html = page.text
   soup = BSoup(html, "html.parser")
-  News = soup.find_all('div')
-  
+  News = soup.findAll('a')
+
   for artcile in News:
-    main = artcile.find_all('a')[0]
+    main = artcile.findAll('a')[:0]
     link = main['href']
     image_src = str(main.find('img')['srcset']).split(" ")[-4]
     title = main['title']
