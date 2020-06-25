@@ -9,17 +9,17 @@ def scrape(request):
   url = "https://www.theonion.com/"
   #content = session.get(url).text
   page = requests.get(url)
-  #print(page.text[:500])
 
   html = page.text
   soup = BSoup(html, "html.parser")
-  News = soup.find_all('article', {"class":"sc-1pw4fyi-7 ffiXfS js_post_item"}) 
+  #print(soup.prettify())
+  News = soup.find_all('article') 
 
   for artcile in News:
     main = artcile.find_all('a')[0]
-    link = main['href']
+    link = main.get('href')
     image_src = str(main.find('img')['srcset']).split(" ")[-4]
-    title = main['h4']
+    title = main.get('h4')
     new_headline = Headline()
     new_headline.title = title
     new_headline.url = link
